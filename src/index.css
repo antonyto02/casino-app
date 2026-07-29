@@ -1,0 +1,271 @@
+:root {
+  --bg: #0a0a12;
+  --bg-elevated: #171029;
+  --bg-panel: #1c1430;
+  --felt-1: #0f3d28;
+  --felt-2: #0a2a1b;
+  --text: #f1eef9;
+  --text-muted: #a79fc0;
+  --border: #3a2f57;
+  --border-soft: rgba(212, 175, 55, 0.25);
+
+  --gold: #d4af37;
+  --gold-bright: #ffd76a;
+  --gold-dim: #8a6d1f;
+  --danger: #ef4444;
+  --success: #2dd47a;
+
+  --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
+  --font-body: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  --shadow-gold: 0 0 0 1px var(--border-soft), 0 8px 24px rgba(0, 0, 0, 0.45);
+  --glow-gold: 0 0 18px rgba(212, 175, 55, 0.35);
+
+  font: 16px/1.55 var(--font-body);
+  color-scheme: dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(212, 175, 55, 0.1), transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(147, 51, 234, 0.14), transparent 45%),
+    radial-gradient(circle at 50% 100%, rgba(15, 61, 40, 0.4), transparent 55%),
+    repeating-linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.015) 0px,
+      rgba(255, 255, 255, 0.015) 1px,
+      transparent 1px,
+      transparent 26px
+    ),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: var(--gold);
+  color: #241a02;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--gold-dim), var(--gold));
+  border-radius: 8px;
+  border: 2px solid var(--bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(var(--gold), var(--gold-bright));
+}
+
+/* Chasing marquee light strip */
+.marquee-lights {
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--gold-bright) 0 6px,
+    rgba(212, 175, 55, 0.15) 6px 18px
+  );
+  background-size: 24px 100%;
+  animation: marquee-move 900ms linear infinite;
+  box-shadow: 0 0 12px rgba(255, 215, 106, 0.5);
+}
+
+@keyframes marquee-move {
+  to {
+    background-position: 24px 0;
+  }
+}
+
+/* Poker-chip decorative element, pure CSS */
+.chip {
+  --chip-color: var(--danger);
+  position: absolute;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(
+      var(--chip-color) 0deg 18deg,
+      #14101f 18deg 36deg
+    );
+  box-shadow:
+    0 0 0 3px #14101f,
+    0 0 0 5px rgba(212, 175, 55, 0.6),
+    0 10px 24px rgba(0, 0, 0, 0.5);
+  opacity: 0.9;
+  animation: chip-float 6s ease-in-out infinite;
+}
+
+.chip::after {
+  content: '';
+  position: absolute;
+  inset: 24%;
+  border-radius: 50%;
+  background: #14101f;
+  border: 2px solid rgba(212, 175, 55, 0.5);
+}
+
+@keyframes chip-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(12deg); }
+}
+
+/* Faded suit watermark, used as a decorative corner icon */
+.suit-watermark {
+  position: absolute;
+  color: var(--gold);
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+h1, h2, h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  margin: 0 0 10px;
+}
+
+h1 {
+  font-size: 44px;
+}
+
+h2 {
+  font-size: 28px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h1 svg, h2 svg, h3 svg {
+  flex-shrink: 0;
+}
+
+p {
+  margin: 0 0 8px;
+  color: var(--text-muted);
+}
+
+a {
+  color: var(--gold-bright);
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  padding: 9px 16px;
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+}
+
+button:hover {
+  border-color: var(--gold-dim);
+}
+
+button.primary,
+.button.primary {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: #241a02;
+  border-color: var(--gold);
+  font-family: var(--font-display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 400;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: var(--glow-gold);
+}
+
+button.primary::after,
+.button.primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: left 500ms ease;
+}
+
+button.primary:hover::after,
+.button.primary:hover::after {
+  left: 125%;
+}
+
+button.primary:hover,
+.button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 26px rgba(212, 175, 55, 0.55);
+}
+
+button.secondary {
+  border-color: var(--gold);
+  color: var(--gold-bright);
+  background: rgba(212, 175, 55, 0.08);
+}
+
+button.secondary:hover {
+  background: rgba(212, 175, 55, 0.16);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--gold-bright);
+  font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
