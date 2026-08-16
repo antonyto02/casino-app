@@ -72,10 +72,6 @@ export function AdminLive() {
       <h2>
         <Radio size={22} /> Panel en vivo — actividad del laboratorio
       </h2>
-      <p className="dashboard-intro">
-        Se actualiza sola cada {POLL_MS / 1000} segundos. Si la conexión falla, sigue
-        reintentando sola; también puedes forzarlo con el botón.
-      </p>
 
       <div className="stat-row">
         <div className="stat-card">
