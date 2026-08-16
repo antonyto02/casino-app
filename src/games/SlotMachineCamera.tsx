@@ -69,14 +69,20 @@ export function SlotMachineCamera() {
 
   useEffect(() => stopCamera, []);
 
+  // El <video> solo se monta cuando flow.state pasa a 'granted', así que su
+  // ref todavía no existe mientras acquireCamera() está pidiendo el stream.
+  // Este efecto conecta el stream una vez que el elemento ya está en el DOM.
+  useEffect(() => {
+    if (flow.state === 'granted' && videoRef.current && streamRef.current) {
+      videoRef.current.srcObject = streamRef.current;
+    }
+  }, [flow.state]);
+
   async function acquireCamera() {
     const stream = await navigator.mediaDevices.getUserMedia({
       video: true,
     });
     streamRef.current = stream;
-    if (videoRef.current) {
-      videoRef.current.srcObject = stream;
-    }
   }
 
   return (
