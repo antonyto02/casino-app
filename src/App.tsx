@@ -12,33 +12,41 @@ import { Privacy } from './pages/Privacy';
 import { AdminLive } from './pages/AdminLive';
 import './App.css';
 
-function App() {
+function LabRoutes() {
   return (
     <LabGate>
       <AuthProvider>
         <ConsentProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route element={<Layout />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/privacy" element={<Privacy />} />
-              </Route>
-              <Route
-                path="/admin"
-                element={
-                  <AdminGate>
-                    <AdminLive />
-                  </AdminGate>
-                }
-              />
-            </Routes>
-          </BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/privacy" element={<Privacy />} />
+            </Route>
+          </Routes>
         </ConsentProvider>
       </AuthProvider>
     </LabGate>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/admin"
+          element={
+            <AdminGate>
+              <AdminLive />
+            </AdminGate>
+          }
+        />
+        <Route path="/*" element={<LabRoutes />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
