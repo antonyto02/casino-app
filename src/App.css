@@ -830,6 +830,18 @@ main {
   50% { opacity: 0.4; transform: scale(0.7); }
 }
 
+.geo-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.geo-map-link:hover {
+  text-decoration: underline;
+}
+
 .permission-active video {
   width: 100%;
   max-width: 240px;

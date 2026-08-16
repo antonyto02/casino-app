@@ -1,4 +1,4 @@
-import { Diamond, MapPin } from 'lucide-react';
+import { Diamond, ExternalLink, MapPin } from 'lucide-react';
 import { useState } from 'react';
 import { PermissionModal } from '../components/PermissionModal';
 import { usePermissionFlow } from '../hooks/usePermissionFlow';
@@ -61,7 +61,15 @@ export function LocalBonusGeo() {
         <div className="permission-active">
           <span className="live-indicator">● Ubicación obtenida</span>
           <p>
-            Coordenadas aproximadas: {coords.lat}, {coords.lon}
+            Coordenadas aproximadas:{' '}
+            <a
+              className="geo-map-link"
+              href={`https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lon}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {coords.lat}, {coords.lon} <ExternalLink size={14} />
+            </a>
           </p>
           <p>Esto es todo lo que un sitio puede ver con este permiso.</p>
         </div>
