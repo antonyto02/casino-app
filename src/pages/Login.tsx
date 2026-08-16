@@ -2,20 +2,22 @@ import { useState, type FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { AuthLayout } from '../components/AuthLayout';
+import { WelcomeModal } from '../components/WelcomeModal';
 
 export function Login() {
-  const { login } = useAuth();
+  const { login, username: authUsername, chips: authChips } = useAuth();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [welcomeOpen, setWelcomeOpen] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError(null);
     try {
       await login(username, password);
-      navigate('/');
+      setWelcomeOpen(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al iniciar sesión');
     }
@@ -49,6 +51,14 @@ export function Login() {
       <p>
         ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
       </p>
+
+      <WelcomeModal
+        open={welcomeOpen}
+        username={authUsername ?? username}
+        chips={authChips ?? 0}
+        title="De vuelta"
+        onContinue={() => navigate('/')}
+      />
     </AuthLayout>
   );
 }
