@@ -1032,6 +1032,7 @@ main {
 
 .welcome-modal h3 {
   margin: 4px 0 2px;
+  justify-content: center;
 }
 
 .welcome-sub {
@@ -1059,6 +1060,31 @@ main {
 
 .welcome-modal .primary {
   width: 100%;
+}
+
+.confetti-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -12px;
+  width: 7px;
+  height: 13px;
+  border-radius: 1px;
+  opacity: 0;
+  animation-name: confetti-fall;
+  animation-timing-function: cubic-bezier(0.35, 0.1, 0.6, 1);
+  animation-fill-mode: forwards;
+}
+
+@keyframes confetti-fall {
+  0% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+  100% { opacity: 0; transform: translate(var(--drift, 0px), 480px) rotate(600deg); }
 }
 
 /* Auth forms */

@@ -1,5 +1,5 @@
 import { Coins, Sparkles } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 
 interface WelcomeModalProps {
   open: boolean;
@@ -10,6 +10,27 @@ interface WelcomeModalProps {
 }
 
 const COIN_COUNT = 8;
+const CONFETTI_COLORS = ['#d4af37', '#ffd76a', '#2dd47a', '#ef4444', '#f1eef9'];
+
+interface ConfettiPiece {
+  id: number;
+  left: number;
+  color: string;
+  delay: number;
+  duration: number;
+  drift: number;
+}
+
+function buildConfetti(count = 36): ConfettiPiece[] {
+  return Array.from({ length: count }, (_, id) => ({
+    id,
+    left: Math.random() * 100,
+    color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
+    delay: Math.random() * 150,
+    duration: 700 + Math.random() * 500,
+    drift: (Math.random() - 0.5) * 140,
+  }));
+}
 
 export function WelcomeModal({
   open,
@@ -19,10 +40,14 @@ export function WelcomeModal({
   onContinue,
 }: WelcomeModalProps) {
   const [displayChips, setDisplayChips] = useState(0);
+  const [bursting, setBursting] = useState(false);
+  const [confetti, setConfetti] = useState<ConfettiPiece[]>([]);
 
   useEffect(() => {
     if (!open) {
       setDisplayChips(0);
+      setBursting(false);
+      setConfetti([]);
       return;
     }
     const duration = 900;
@@ -40,6 +65,13 @@ export function WelcomeModal({
   }, [open, chips]);
 
   if (!open) return null;
+
+  function handleContinue() {
+    if (bursting) return;
+    setConfetti(buildConfetti());
+    setBursting(true);
+    setTimeout(onContinue, 700);
+  }
 
   return (
     <div className="modal-backdrop" role="dialog" aria-modal="true">
@@ -59,10 +91,30 @@ export function WelcomeModal({
         <div className="welcome-chip-count">{displayChips.toLocaleString('es-MX')}</div>
         <p className="welcome-chip-label">fichas</p>
 
-        <button className="primary" onClick={onContinue}>
+        <button className="primary" onClick={handleContinue} disabled={bursting}>
           Empezar a jugar
         </button>
       </div>
+
+      {bursting && (
+        <div className="confetti-field" aria-hidden="true">
+          {confetti.map((piece) => (
+            <span
+              key={piece.id}
+              className="confetti-piece"
+              style={
+                {
+                  left: `${piece.left}%`,
+                  background: piece.color,
+                  animationDelay: `${piece.delay}ms`,
+                  animationDuration: `${piece.duration}ms`,
+                  '--drift': `${piece.drift}px`,
+                } as CSSProperties
+              }
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
